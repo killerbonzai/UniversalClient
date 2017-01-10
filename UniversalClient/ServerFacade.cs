@@ -25,11 +25,9 @@ namespace UniversalClient
         {
             IP = ip;
             Port = port;
-
-            StartClient();
         }
 
-        private void StartClient()
+        public void StartClient()
         {
             server = new TcpClient(IP, Port); // try to connect to server
             stream = server.GetStream(); // get stream from server

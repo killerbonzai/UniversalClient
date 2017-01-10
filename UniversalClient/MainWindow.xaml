@@ -13,7 +13,11 @@
         <TextBox x:Name="txtPort" HorizontalAlignment="Left" Height="23" Margin="137,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="12000"/>
         <Label x:Name="label" Content="IP" HorizontalAlignment="Left" Margin="12,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.842,5.231"/>
         <Label x:Name="label_Copy" Content="Port" HorizontalAlignment="Left" Margin="137,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.842,5.231"/>
-        <TextBlock x:Name="txtbChat" HorizontalAlignment="Left" Margin="10,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="178" Width="497" Background="#FFC1C1C1"/>
+
+        <ScrollViewer x:Name="scrollviewer" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Margin="12,64,15,77" Background="#FFC1C1C1">
+            <TextBlock x:Name="txtbChat" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" />
+        </ScrollViewer>
+
         <TextBox x:Name="txtSend" HorizontalAlignment="Left" Height="23" Margin="10,247,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="345" KeyDown="txtSend_KeyDown"/>
         <Button x:Name="btnSend" Content="Send" HorizontalAlignment="Left" Margin="360,247,0,0" VerticalAlignment="Top" Width="75" Click="btnSend_Click"/>
 
