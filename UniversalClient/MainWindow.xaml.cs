@@ -23,7 +23,7 @@ namespace UniversalClient
     {
         ServerFacade server;
         private bool connected = false;
-        private Timer connecting = new Timer(1500);
+        private Timer connecting = new Timer(1000);
         private int connectionCount = 0;
         private string ip;
         private string port;
@@ -44,28 +44,42 @@ namespace UniversalClient
 
             try
             {
+                connecting.Stop();
                 WriteToChat("<<Trying to connect to the server... attempt #" + (connectionCount + 1).ToString() + ">>");
                 server = new ServerFacade(ip, _port);
                 server.StartClient();
                 server.AddCompletedEvent += getFromServer;
                 server.StartRecieveFromServerThread();
                 connected = true;
-                connecting.Stop();
                 connectionCount = 0;
                 return;
             }
             catch (Exception)
             {
+                connecting.Start();
             }
         }
 
         private void Connecting_Tick(object sender, EventArgs e)
         {
-            if (connectionCount == 5) // if we reach 5: stop
+            if (connectionCount > 4) // if we reach 5: stop
             {
                 connecting.Stop();
                 connectionCount = 0;
                 WriteToChat("<<Connection failed!>>");
+                try
+                {
+                    // write to chat -- threadpool
+                    this.Dispatcher.Invoke(new Action(() => // invoke ui dispatcher
+                    {
+                        btnConnect.IsEnabled = true;
+                    }));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("A handled exception just occurred: " + ex.Message, "Write to chat", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                
                 return;
             }
             ServerConnect(); // THEN try to connect
@@ -123,6 +137,7 @@ namespace UniversalClient
 
         private void btnConnect_Click(object sender, RoutedEventArgs e)
         {
+            btnConnect.IsEnabled = false;
             ip = txtIp.Text;
             port = txtPort.Text;
             
